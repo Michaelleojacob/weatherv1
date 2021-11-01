@@ -94,7 +94,7 @@ function extractUsefulProps(obj) {
 // this is the function to fetch a city
 async function fetchData(city) {
   const makeFetch = await fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.key}`,
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.key}`,
     { mode: 'cors' }
   );
   const weatherData = await makeFetch.json();
