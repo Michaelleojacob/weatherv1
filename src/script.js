@@ -1,5 +1,82 @@
 import './style.css';
 
+function cacheStaticDom() {
+  return {
+    nameEl: document.querySelector('#name'),
+    descEl: document.querySelector('#desc'),
+    humidityEl: document.querySelector('#humidity'),
+    windspdEl: document.querySelector('#windspd'),
+  };
+}
+
+function cacheDynamicDom() {
+  return {
+    tempEl: document.querySelector('#temp'),
+    feelsLikeEl: document.querySelector('#feelsLike'),
+    highEl: document.querySelector('#high'),
+    lowEl: document.querySelector('#low'),
+  };
+}
+
+function convertToF(num) {
+  return Math.round((num - 273) * (9 / 5) + 32);
+}
+function convertToC(num) {
+  return Math.round(num - 273);
+}
+
+function cardFactoryFunction(obj) {
+  const staticDom = cacheStaticDom();
+  // render static goodness
+  function renderStaticValues() {
+    staticDom.nameEl.textContent = `city: ${obj.name}`;
+    staticDom.descEl.textContent = `desc: ${obj.desc}`;
+    staticDom.humidityEl.textContent = `humidity: ${obj.humidity}%`;
+    staticDom.windspdEl.textContent = `wind speed: ${obj.windspd}m/s`;
+  }
+
+  // render f and c
+  const dynamicDom = cacheDynamicDom();
+  // render f
+  function renderF() {
+    dynamicDom.tempEl.textContent = `temp: ${convertToF(obj.temp)}`;
+    dynamicDom.feelsLikeEl.textContent = `feels like: ${convertToF(obj.feelsLike)}`;
+    dynamicDom.highEl.textContent = `max: ${convertToF(obj.max)}`;
+    dynamicDom.lowEl.textContent = `min: ${convertToF(obj.min)}`;
+  }
+  // render c
+  function renderC() {
+    dynamicDom.tempEl.textContent = `temp: ${convertToC(obj.temp)}`;
+    dynamicDom.feelsLikeEl.textContent = `feels like: ${convertToC(obj.feelsLike)}`;
+    dynamicDom.highEl.textContent = `max: ${convertToC(obj.max)}`;
+    dynamicDom.lowEl.textContent = `min: ${convertToC(obj.min)}`;
+  }
+
+  // get checkbox current value on creation
+  const toggler = document.querySelector('#checkbox');
+  let currentState = toggler.checked;
+
+  // add listener for checkbox updates
+
+  function getCurrentState() {
+    currentState = toggler.checked;
+    return currentState;
+  }
+
+  function addListener() {
+    toggler.addEventListener('click', (e) => {
+      getCurrentState();
+      if (!currentState) renderF();
+      if (currentState) renderC();
+    });
+  }
+
+  addListener();
+  renderStaticValues();
+  if (!currentState) renderF();
+  if (currentState) renderC();
+}
+
 function extractUsefulProps(obj) {
   return {
     name: obj.name,
@@ -10,6 +87,7 @@ function extractUsefulProps(obj) {
     desc: obj.weather[0].description,
     icon: obj.weather[0].icon,
     windspd: obj.wind.speed,
+    humidity: obj.main.humidity,
   };
 }
 
@@ -20,11 +98,9 @@ async function fetchData(city) {
     { mode: 'cors' }
   );
   const weatherData = await makeFetch.json();
+  // console.log(weatherData);
   const weatherProps = extractUsefulProps(weatherData);
   console.log(weatherProps);
-  return weatherProps;
+  const newCard = cardFactoryFunction(weatherProps);
 }
 fetchData('san diego');
-
-const checkbox = document.querySelector('#checkbox');
-console.log(checkbox.checked);
