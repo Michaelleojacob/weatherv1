@@ -1,3 +1,5 @@
+import './style.css';
+
 async function fetchData(city) {
   const makeFetch = await fetch(
     `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.key}`,
