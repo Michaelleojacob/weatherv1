@@ -16,4 +16,10 @@ console.log(checkbox.checked);
 // we can call fetchData(city)
 // we can check the checkbox value
 
-//
+// on submit
+// make fetch
+// depending on checkbox ->
+// -> render card -> f or c
+
+// Q how to have the card check for checkbox click
+// Q checkbox changes how to re render the card
