@@ -1,20 +1,26 @@
 import './style.css';
 
+function getDomParent() {
+  return document.querySelector('#cardWrap');
+}
+
 function cacheStaticDom() {
+  const parent = getDomParent();
   return {
-    nameEl: document.querySelector('#name'),
-    descEl: document.querySelector('#desc'),
-    humidityEl: document.querySelector('#humidity'),
-    windspdEl: document.querySelector('#windspd'),
+    nameEl: parent.querySelector('#name'),
+    descEl: parent.querySelector('#desc'),
+    humidityEl: parent.querySelector('#humidity'),
+    windspdEl: parent.querySelector('#windspd'),
   };
 }
 
 function cacheDynamicDom() {
+  const parent = getDomParent();
   return {
-    tempEl: document.querySelector('#temp'),
-    feelsLikeEl: document.querySelector('#feelsLike'),
-    highEl: document.querySelector('#high'),
-    lowEl: document.querySelector('#low'),
+    tempEl: parent.querySelector('#temp'),
+    feelsLikeEl: parent.querySelector('#feelsLike'),
+    highEl: parent.querySelector('#high'),
+    lowEl: parent.querySelector('#low'),
   };
 }
 
@@ -26,55 +32,46 @@ function convertToC(num) {
 }
 
 function makeCard(obj) {
-  const staticDom = cacheStaticDom();
-  // render static goodness
-  function renderStaticValues() {
-    staticDom.nameEl.textContent = `${obj.name}`;
-    staticDom.descEl.textContent = `${obj.desc}`;
-    staticDom.humidityEl.textContent = `humidity: ${obj.humidity}%`;
-    staticDom.windspdEl.textContent = `wind speed: ${obj.windspd}m/s`;
-  }
-
-  // render f and c
-  const dynamicDom = cacheDynamicDom();
-  // render f
-  function renderF() {
-    dynamicDom.tempEl.textContent = `temp: ${convertToF(obj.temp)}`;
-    dynamicDom.feelsLikeEl.textContent = `feels like: ${convertToF(obj.feelsLike)}`;
-    dynamicDom.highEl.textContent = `max: ${convertToF(obj.max)}`;
-    dynamicDom.lowEl.textContent = `min: ${convertToF(obj.min)}`;
-  }
-  // render c
-  function renderC() {
-    dynamicDom.tempEl.textContent = `temp: ${convertToC(obj.temp)}`;
-    dynamicDom.feelsLikeEl.textContent = `feels like: ${convertToC(obj.feelsLike)}`;
-    dynamicDom.highEl.textContent = `max: ${convertToC(obj.max)}`;
-    dynamicDom.lowEl.textContent = `min: ${convertToC(obj.min)}`;
-  }
-
-  // get checkbox current value on creation
   const toggler = document.querySelector('#checkbox');
   let currentState = toggler.checked;
 
-  // add listener for checkbox updates
+  const staticDom = cacheStaticDom();
+
+  function renderStaticValues() {
+    staticDom.nameEl.textContent = `${obj.name}`;
+    staticDom.descEl.textContent = `${obj.desc}`;
+    staticDom.humidityEl.textContent = `humidity: ${obj.humidity} %`;
+    staticDom.windspdEl.textContent = `wind speed: ${obj.windspd} m/s`;
+  }
+
+  const dynamicDom = cacheDynamicDom();
+
+  function renderDynamicDom(fn) {
+    dynamicDom.tempEl.textContent = `temp: ${fn(obj.temp)}`;
+    dynamicDom.feelsLikeEl.textContent = `feels like: ${fn(obj.feelsLike)}`;
+    dynamicDom.highEl.textContent = `max: ${fn(obj.max)}`;
+    dynamicDom.lowEl.textContent = `min: ${fn(obj.min)}`;
+  }
 
   function getCurrentState() {
     currentState = toggler.checked;
     return currentState;
   }
 
+  function renderBasedOnState() {
+    getCurrentState();
+    return currentState ? renderDynamicDom(convertToC) : renderDynamicDom(convertToF);
+  }
+
   function addListener() {
     toggler.addEventListener('click', () => {
-      getCurrentState();
-      if (!currentState) renderF();
-      if (currentState) renderC();
+      renderBasedOnState();
     });
   }
 
   addListener();
   renderStaticValues();
-  if (!currentState) renderF();
-  if (currentState) renderC();
+  renderBasedOnState();
 }
 
 function extractUsefulProps(obj) {
