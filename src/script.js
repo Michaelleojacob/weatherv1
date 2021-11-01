@@ -25,12 +25,12 @@ function convertToC(num) {
   return Math.round(num - 273);
 }
 
-function cardFactoryFunction(obj) {
+function makeCard(obj) {
   const staticDom = cacheStaticDom();
   // render static goodness
   function renderStaticValues() {
-    staticDom.nameEl.textContent = `city: ${obj.name}`;
-    staticDom.descEl.textContent = `desc: ${obj.desc}`;
+    staticDom.nameEl.textContent = `${obj.name}`;
+    staticDom.descEl.textContent = `${obj.desc}`;
     staticDom.humidityEl.textContent = `humidity: ${obj.humidity}%`;
     staticDom.windspdEl.textContent = `wind speed: ${obj.windspd}m/s`;
   }
@@ -64,7 +64,7 @@ function cardFactoryFunction(obj) {
   }
 
   function addListener() {
-    toggler.addEventListener('click', (e) => {
+    toggler.addEventListener('click', () => {
       getCurrentState();
       if (!currentState) renderF();
       if (currentState) renderC();
@@ -100,7 +100,23 @@ async function fetchData(city) {
   const weatherData = await makeFetch.json();
   // console.log(weatherData);
   const weatherProps = extractUsefulProps(weatherData);
-  console.log(weatherProps);
-  const newCard = cardFactoryFunction(weatherProps);
+  return weatherProps;
 }
-fetchData('san diego');
+
+function addInputListener() {
+  const inputWrapper = document.querySelector('#inputWrapper');
+  const input = inputWrapper.querySelector('#input');
+  inputWrapper.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fetchReq = await fetchData(input.value);
+    makeCard(fetchReq);
+    input.value = '';
+  });
+}
+addInputListener();
+
+async function onPageLoad() {
+  const fetchReq = await fetchData('san diego');
+  makeCard(fetchReq);
+}
+onPageLoad();
