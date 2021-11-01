@@ -9,3 +9,11 @@ async function fetchData(city) {
   console.log(weatherData);
 }
 fetchData('san diego');
+
+const checkbox = document.querySelector('#checkbox');
+console.log(checkbox.checked);
+
+// we can call fetchData(city)
+// we can check the checkbox value
+
+//
