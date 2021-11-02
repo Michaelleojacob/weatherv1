@@ -46,11 +46,11 @@ function makeCard(obj) {
 
   const dynamicDom = cacheDynamicDom();
 
-  function renderDynamicDom(fn) {
-    dynamicDom.tempEl.textContent = `temp: ${fn(obj.temp)}`;
-    dynamicDom.feelsLikeEl.textContent = `feels like: ${fn(obj.feelsLike)}`;
-    dynamicDom.highEl.textContent = `max: ${fn(obj.max)}`;
-    dynamicDom.lowEl.textContent = `min: ${fn(obj.min)}`;
+  function renderDynamicDom(fn, temp) {
+    dynamicDom.tempEl.innerHTML = `temp: ${fn(obj.temp)}&deg;${temp}`;
+    dynamicDom.feelsLikeEl.innerHTML = `feels like: ${fn(obj.feelsLike)}&deg;${temp}`;
+    dynamicDom.highEl.innerHTML = `max: ${fn(obj.max)}&deg;${temp}`;
+    dynamicDom.lowEl.innerHTML = `min: ${fn(obj.min)}&deg;${temp}`;
   }
 
   function getCurrentState() {
@@ -60,7 +60,7 @@ function makeCard(obj) {
 
   function renderBasedOnState() {
     getCurrentState();
-    return currentState ? renderDynamicDom(convertToC) : renderDynamicDom(convertToF);
+    return currentState ? renderDynamicDom(convertToC, 'C') : renderDynamicDom(convertToF, 'F');
   }
 
   function addListener() {
