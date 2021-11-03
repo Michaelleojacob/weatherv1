@@ -16,7 +16,10 @@
   font-size: 2em;
 }
 #name {
-  font-size: 4em;
+  display: flex;
+  flex-wrap: nowrap;
+  /* font-size: 4rem; */
+  font-size: clamp(2rem, 3em, 4em);
 }
 
 #tempAndStatsWrap {
