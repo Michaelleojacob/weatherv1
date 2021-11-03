@@ -115,7 +115,7 @@ async function fetchData(city) {
     { mode: 'cors' }
   );
   const weatherData = await makeFetch.json();
-  console.log(weatherData);
+  // console.log(weatherData);
   const weatherProps = extractUsefulProps(weatherData);
   return weatherProps;
 }
