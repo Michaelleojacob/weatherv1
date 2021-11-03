@@ -1,36 +1,46 @@
 #cardWrap {
-  border: 1px solid black;
-  height: 300px;
-  width: 300px;
-  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: min(100%, 400px);
 }
 
 #cardHeader {
-  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 1em;
 }
 
 #desc {
-  font-size: 1.5em;
+  font-size: 2em;
 }
 #name {
-  font-size: 2em;
+  font-size: 4em;
 }
 
 #tempAndStatsWrap {
-  border: 1px solid black;
   display: flex;
-  gap: 1em;
-  padding: 1em;
+  justify-content: space-around;
+  align-items: center;
 }
 #temp {
-  font-size: 4em;
+  font-size: 5em;
 }
 
 #cardTemp {
   display: flex;
+  border: 1px solid transparent;
 }
 
 #degCorFWrap {
   margin-top: 1rem;
+}
+
+#stats {
+  font-size: 1.3rem;
+}
+
+#tempcf {
+  font-size: 1.5em;
 }
