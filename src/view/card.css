@@ -2,4 +2,35 @@
   border: 1px solid black;
   height: 300px;
   width: 300px;
+  padding: 1em;
+}
+
+#cardHeader {
+  border: 1px solid black;
+  padding: 1em;
+}
+
+#desc {
+  font-size: 1.5em;
+}
+#name {
+  font-size: 2em;
+}
+
+#tempAndStatsWrap {
+  border: 1px solid black;
+  display: flex;
+  gap: 1em;
+  padding: 1em;
+}
+#temp {
+  font-size: 4em;
+}
+
+#cardTemp {
+  display: flex;
+}
+
+#degCorFWrap {
+  margin-top: 1rem;
 }
