@@ -1,0 +1,62 @@
+#inputWrapper {
+  font-size: 1.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 1em;
+}
+
+#input {
+  text-align: end;
+  width: max(175px, 30vw);
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+#input:focus {
+  outline-width: 0;
+  border: 1px solid black;
+}
+
+#toggler {
+  margin-right: 1.5em;
+  align-self: flex-end;
+}
+
+#footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+  flex-direction: column;
+  align-items: center;
+  color: #212529;
+}
+
+#email {
+  font-size: 1.5em;
+}
+.fa-copyright {
+  font-size: 0.8em;
+}
+
+#links {
+  font-size: 2.5em;
+  color: #212529;
+  opacity: 85%;
+}
+
+.fa-at {
+  margin: 0.1em;
+}
+
+.fa-linkedin {
+  margin: 0.1em;
+}
+.fa-github {
+  margin: 0.1em;
+}
+
+.link:hover {
+  opacity: 50%;
+  cursor: pointer;
+}

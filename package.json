@@ -13,6 +13,9 @@
   "author": "Michael Jacob",
   "license": "ISC",
   "description": "",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4"
+  },
   "devDependencies": {
     "css-loader": "^6.5.0",
     "dotenv-webpack": "^7.0.3",

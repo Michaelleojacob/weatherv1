@@ -2,3 +2,12 @@
 @import './view/app.css';
 @import './toggle/toggle.css';
 @import './view/card.css';
+@import './view/linkAndInput.css';
+
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
